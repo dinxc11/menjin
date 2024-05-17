@@ -1,0 +1,29 @@
+<%@ page session="false" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+	<script>
+		Date.prototype.format = function (fmt) {
+			var o = {
+				"y+": this.getFullYear, //年
+				"M+": this.getMonth() + 1, //月份
+				"d+": this.getDate(), //日
+				//"h+": this.getHours(), //小时
+				//"m+": this.getMinutes(), //分
+				//"s+": this.getSeconds() //秒
+				};
+			if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+			if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+		setInterval("document.getElementById('dateTime1').innerHTML = (new Date()).format('yyyy-MM-dd');", 1000);
+		setInterval("document.getElementById('dateTime2').innerHTML = (new Date()).format('yyyy-MM-dd');", 1000);
+	</script>
+		<p style="font-family: Times New Roman;font-size: 9.5px">你好,你的访问审核状态为:访问审核已通过!请至前台确认。通行时间为:<span id="dateTime1"></span> 07:30:00.0至<span id="dateTime2"></span> 20:00:00.0</p>
+	</body>
+</html>
